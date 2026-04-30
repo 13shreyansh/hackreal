@@ -5,23 +5,7 @@ import { ArrowLeft, Filter } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ProblemCard } from './problem-card'
 import { ProblemSkeleton } from './problem-skeleton'
-
-interface SubmitTo {
-  platform: string
-  type: 'Bounty' | 'Grant' | 'Open Source' | 'Competition' | 'Freelance'
-  estimatedReward: string | null
-  url: string
-}
-
-interface Problem {
-  title: string
-  description: string
-  category: string
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced'
-  suggestedTech: string[]
-  whyItMatters: string
-  submitTo: SubmitTo[]
-}
+import type { Problem } from '@/lib/problems-db'
 
 interface ResultsViewProps {
   problems: Problem[]
