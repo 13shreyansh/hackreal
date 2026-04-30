@@ -6,7 +6,6 @@ import {
   Trophy,
   Briefcase,
   Award,
-  Sparkles,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import type { Problem } from '@/lib/problems-db'
@@ -77,12 +76,6 @@ export function ProblemCard({ problem, index }: ProblemCardProps) {
         <p className="text-xs font-medium text-primary">
           {problem.whyItMatters}
         </p>
-      </div>
-
-      {/* Inspired by */}
-      <div className="mt-3 flex items-center gap-1.5 text-[11px] text-muted-foreground/60">
-        <Sparkles className="h-3 w-3" />
-        <span>Inspired by: {problem.inspiredBy}</span>
       </div>
 
       {/* Tech stack */}
