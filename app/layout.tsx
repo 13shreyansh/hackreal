@@ -7,9 +7,9 @@ const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'BountyBoard — Find What to Build at Your Next Hackathon',
+  title: 'HackReal — Stop Building Demos Nobody Needs',
   description:
-    'Real bounties from across the internet, aggregated into one feed. Find paid problems to solve at your next hackathon.',
+    'Tell us about your hackathon. We find real-world problems worth solving and show you where to ship your solution afterward.',
   generator: 'v0.app',
   icons: {
     icon: [

@@ -1,7 +1,7 @@
 import { streamText, Output } from 'ai'
 import { z } from 'zod'
 
-const problemSchema = z.object({
+export const problemSchema = z.object({
   problems: z.array(
     z.object({
       title: z.string().describe('A clear, concise title for the problem (5-10 words)'),
@@ -27,10 +27,10 @@ const problemSchema = z.object({
       whyItMatters: z.string().describe('One punchy sentence on the real-world impact'),
       submitTo: z.array(
         z.object({
-          platform: z.string().describe('Name of the platform where a solution can be submitted or earns bounty'),
+          platform: z.string().describe('Name of the platform where a solution can be submitted'),
           type: z.enum(['Bounty', 'Grant', 'Open Source', 'Competition', 'Freelance']),
           estimatedReward: z.string().nullable().describe('Estimated reward range like "$200-$500" or null if unpaid open source'),
-          url: z.string().describe('A plausible URL for the platform'),
+          url: z.string().url().describe('A plausible URL for the platform'),
         })
       ).describe('1-3 places where the builder can submit or monetize their solution'),
     })
@@ -48,17 +48,15 @@ These should NOT be vague ideas like "build a todo app." They should be specific
 
 For each problem, suggest real platforms where the solution could be submitted or monetized. Use actual platforms like:
 - Superteam Earn (Solana ecosystem bounties)
-- Algora (open source bounties)  
+- Algora (open source bounties)
 - Gitcoin (web3 grants)
 - GitHub Issues / GitHub Sponsors (open source contributions)
 - HeroX (innovation challenges)
-- BountyBoard (community bounties)
 - Replit Bounties (code bounties)
 - IssueHunt (open source bounties)
-- Freelancer / Upwork (freelance projects matching the problem)
 - Devpost (hackathon submissions)
 
-Give realistic estimated rewards based on the difficulty and type of problem. Not every problem needs to have a paid bounty — some are valuable open source contributions.
+Give realistic estimated rewards based on difficulty and type. Not every problem needs a paid bounty — some are valuable open source contributions.
 
 Generate exactly 8 problems. Make them diverse in difficulty and category. Be specific and concrete, not generic.`,
     prompt: `Here's what I know about my hackathon:
@@ -66,10 +64,8 @@ Generate exactly 8 problems. Make them diverse in difficulty and category. Be sp
 ${hackathonContext}
 
 Find me 8 real problems I could solve at this hackathon. Make them specific, actionable, and matched to this hackathon's theme and constraints. For each one, tell me exactly where I can submit or continue the project after the hackathon.`,
-    output: Output.object({
-      schema: problemSchema,
-    }),
+    output: Output.object({ schema: problemSchema }),
   })
 
-  return result.toTextStreamResponse()
+  return result.toUIMessageStreamResponse()
 }
