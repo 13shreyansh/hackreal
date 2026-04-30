@@ -24,11 +24,14 @@ interface Problem {
 export default function Home() {
   const [problems, setProblems] = useState<Problem[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [inputValue, setInputValue] = useState('')
   const [hackathonContext, setHackathonContext] = useState('')
   const [hasResults, setHasResults] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = useCallback(async (context: string) => {
+  const handleSubmit = useCallback(async () => {
+    const context = inputValue.trim()
+    if (!context || isLoading) return
     setIsLoading(true)
     setHackathonContext(context)
     setProblems([])
@@ -80,7 +83,7 @@ export default function Home() {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [inputValue, isLoading])
 
   const handleReset = useCallback(() => {
     setProblems([])
@@ -109,7 +112,12 @@ export default function Home() {
 
       <main className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-16">
         {!hasResults ? (
-          <HackathonInput onSubmit={handleSubmit} isLoading={isLoading} />
+          <HackathonInput
+            input={inputValue}
+            onInputChange={setInputValue}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+          />
         ) : (
           <>
             {error ? (
